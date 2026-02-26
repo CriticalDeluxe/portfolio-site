@@ -1,23 +1,48 @@
 :root {
   --bg-a: #12354e;
   --bg-b: #5a82b3;
-  --surface: rgba(15, 23, 42, 0.55);
+  --bg-base: #0b1521;
+  --pattern-border-a: #12354e;
+  --pattern-border-b: #5a82b3;
+  --pattern-size: 320px;
+  --surface: #12354e;
   --surface-2: rgba(17, 24, 39, 0.78);
   --border: rgba(148, 163, 184, 0.22);
-  --text: #e5e7eb;
+  --text: #c8dcf3;
   --muted: #cbd5e1;
   --link: #bfdbfe;
-  max-width: 840px;
-  /* try 780–880px */
-  margin: 0 auto;
-  padding: 1.5rem 1rem 3rem;
+  /* Optional pattern tint controls (used by the commented body::before block below). */
+  /* --pattern-tint-a: rgba(18, 53, 78, 0.42); */
+  /* --pattern-tint-b: rgba(90, 130, 179, 0.28); */
+  /* max-width: 840px; */
+  /* try 780窶・80px */
+  /* margin: 0 auto; */
+  /* padding: 1.5rem 1rem 3rem; */
 }
 
 html {
   color-scheme: dark;
 }
 
+main {
+
+  max-width: 840px;
+  /* try 780窶・80px */
+  margin: 0 auto;
+  padding: 1.75rem;
+  border: 3px solid #12354e;
+  border-radius: 25px;
+  /* Applies a 25px curve to all corners */
+  background-color: #12354e;
+  opacity: 1;
+  background-size: 12px 12px;
+  background-image: repeating-linear-gradient(45deg, #5a82b38c 0, #5a82b380 1px, #12354e79 0, #12354e 25%);
+  box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.25);
+
+}
+
 body {
+  align-items: inherit;
   margin: 0;
   min-height: 100vh;
   display: grid;
@@ -28,6 +53,7 @@ body {
   color: var(--text);
   font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   line-height: 1.5;
+
 }
 
 a {
@@ -47,10 +73,12 @@ img {
 .site-footer {
   background: rgba(2, 6, 23, 0.55);
   border: 0 solid var(--border);
+  text-align: center;
 }
 
 .site-header {
   border-bottom-width: 1px;
+  ;
 }
 
 .site-footer {
@@ -59,7 +87,9 @@ img {
 
 .site-header .site-shell,
 .site-footer .site-shell {
-  display: flex;
+  /* display: flex; */
+  padding: 5px 0;
+
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
@@ -74,7 +104,9 @@ img {
 }
 
 .site-nav {
-  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  justify-content: space-between;
   gap: 1rem;
 }
 
@@ -100,8 +132,35 @@ img {
 h1,
 h2,
 h3 {
+
   line-height: 1.2;
   margin-top: 0;
+  /* Set the text color */
+  --text: #c8dcf3;
+  text-align: center;
+
+
+  /* Add the stroke (width and color) */
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #0b2030;
+  /* Standard property, less support but good practice */
+  -webkit-text-stroke-color: #0b2030;
+
+  /* Add the drop shadow (offset-x, offset-y, blur-radius, color) */
+  text-shadow:
+    4px 4px 8px rgba(0, 0, 0, 0.5);
+
+}
+
+h2 {
+  background-color: #12354e;
+  padding: 1rem;
+  border: 1.5px solid #5a82b3;
+  border-radius: 25px;
+  /* max-width: 350px; */
+  margin: 2rem auto;
+  box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.5);
+
 }
 
 p {
@@ -115,7 +174,7 @@ code {
 /* Skill card icon gradients (uses external SVGs as masks). */
 .skill-card .skill-icon {
   display: inline-block;
-  background: rgba(226, 232, 240, 0.85);
+  background: #c8dcf3;
   -webkit-mask-image: var(--icon-mask);
   mask-image: var(--icon-mask);
   -webkit-mask-repeat: no-repeat;
@@ -139,40 +198,43 @@ code {
 
 .skill-card {
   position: relative;
+  padding: 2px;
+  border-color: transparent;
+
+  box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.5);
+  transition:
+    background 220ms ease,
+    transform 220ms ease;
 }
 
 .skill-card::after {
   content: "";
   position: absolute;
   inset: 0;
-  padding: 1px;
-  border-radius: inherit;
-  background: transparent;
-  opacity: 0;
+  padding: 2px;
+  border-radius: 25px;
+  background: #5a82b3;
+  opacity: 1;
   pointer-events: none;
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
+  transition:
+    background 220ms ease,
+    transform 220ms ease;
 }
 
 .skill-card:hover::after,
 .skill-card:focus-visible::after {
   background: var(--skill-gradient, transparent);
-  opacity: 1;
-  /* transition: opacity 220ms ease; */
-
-  transform: translateY(-1px);
-  transition:
-    background 220ms ease,
-    transform 220ms ease,
-    filter 220ms ease;
+  padding: 2px;
 }
 
 .skill-card:hover,
 .skill-card:focus-visible {
-  border-color: transparent;
+  transform: translateY(-1px);
 }
 
 .skill-card[data-skill="3d-printing"] {

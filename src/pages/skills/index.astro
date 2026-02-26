@@ -1,90 +1,94 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
 import { skills } from "../../data/skills";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Skills">
-  <main>
-    <header class="page-header">
-      <h1>Skills</h1>
-      <p class="intro">
-        Each area below breaks down how I work, the tools I use,
-        and examples of finished projects.
-      </p>
-    </header>
+    <main>
+        <header class="page-header">
+            <h1>Skills</h1>
+            <p class="intro">
+                Each area below breaks down how I work, the tools I use, and
+                examples of finished projects.
+            </p>
+        </header>
 
-    <section class="skills-grid">
-      {skills.map((s) => (
-        <a
-          class="skill-card"
-          href={`/skills/${s.slug}`}
-          data-skill={s.slug}
-        >
-          <span
-            class="skill-icon"
-            aria-hidden="true"
-            style={`--icon-mask: url('${s.icon}')`}
-          ></span>
-          <div class="skill-text">
-            <span class="skill-title">{s.title}</span>
-            {s.blurb && <span class="skill-blurb">{s.blurb}</span>}
-          </div>
-        </a>
-      ))}
-    </section>
-  </main>
+        <section class="skills-grid">
+            {
+                skills.map((s) => (
+                    <a
+                        class="skill-card"
+                        href={`/skills/${s.slug}`}
+                        data-skill={s.slug}
+                    >
+                        <span
+                            class="skill-icon"
+                            aria-hidden="true"
+                            style={`--icon-mask: url('${s.icon}')`}
+                        />
+                        <div class="skill-text">
+                            <span class="skill-title">{s.title}</span>
+                            {s.blurb && (
+                                <span class="skill-blurb">{s.blurb}</span>
+                            )}
+                        </div>
+                    </a>
+                ))
+            }
+        </section>
+    </main>
 </BaseLayout>
 
 <style>
-  .page-header {
-    margin-bottom: 2rem;
-  }
+    .page-header {
+        margin-bottom: 2rem;
+    }
 
-  .intro {
-    max-width: 70ch;
-    font-size: 1.05rem;
-    opacity: 0.9;
-  }
+    .intro {
+        max-width: 70ch;
+        font-size: 1.05rem;
+        opacity: 0.9;
+    }
 
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
-  }
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+    }
 
-  .skill-card {
-    display: flex;
-    gap: 0.75rem;
-    padding: 1rem;
-    border: 1px solid rgba(148, 163, 184, 0.25);
-    border-radius: 8px;
-    text-decoration: none;
-    color: inherit;
-    align-items: flex-start;
-    background: rgba(15, 23, 42, 0.45);
-  }
+    .skill-card {
+        display: flex;
+        gap: 0.75rem;
+        padding: 1rem;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        border-radius: 8px;
+        text-decoration: none;
+        color: inherit;
+        align-items: flex-start;
+        background: rgba(15, 23, 42, 0.45);
+    }
 
-  .skill-card:hover {
-    background: rgba(30, 41, 59, 0.7);
-  }
+    .skill-card:hover {
+        background: rgba(30, 41, 59, 0.7);
+    }
 
-  .skill-icon {
-    flex: 0 0 auto;
-    width: 32px;
-    height: 32px;
-  }
+    .skill-icon {
+        flex: 0 0 auto;
+        width: 32px;
+        height: 32px;
+    }
 
-  .skill-text {
-    display: grid;
-    gap: 0.2rem;
-  }
+    .skill-text {
+        display: grid;
+        gap: 0.2rem;
+    }
 
-  .skill-title {
-    font-weight: 600;
-  }
+    .skill-title {
+        font-weight: 600;
+    }
 
-  .skill-blurb {
-    font-size: 0.9rem;
-    opacity: 0.85;
-  }
+    .skill-blurb {
+        font-size: 0.9rem;
+        opacity: 0.85;
+    }
 </style>

@@ -1,12 +1,20 @@
 :root {
-  --bg-a: #0f172a;
-  --bg-b: #111827;
+  --bg-a: #12354e;
+  --bg-b: #5a82b3;
+  --bg-base: #0b1521;
+  --pattern-border-a: #12354e;
+  --pattern-border-b: #5a82b3;
+  --pattern-size: 320px;
   --surface: rgba(15, 23, 42, 0.55);
   --surface-2: rgba(17, 24, 39, 0.78);
   --border: rgba(148, 163, 184, 0.22);
   --text: #e5e7eb;
   --muted: #cbd5e1;
   --link: #bfdbfe;
+
+  /* Optional pattern tint controls (used by the commented body::before block below). */
+  /* --pattern-tint-a: rgba(18, 53, 78, 0.42); */
+  /* --pattern-tint-b: rgba(90, 130, 179, 0.28); */
 }
 
 html {
@@ -14,17 +22,55 @@ html {
 }
 
 body {
+  box-sizing: border-box;
   margin: 0;
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background:
-    radial-gradient(circle at 10% 10%, rgba(148, 163, 184, 0.08), transparent 45%),
-    linear-gradient(160deg, var(--bg-a), var(--bg-b));
+  border: 5px solid transparent;
+  border-image: linear-gradient(135deg, var(--pattern-border-a), var(--pattern-border-b)) 1;
+  background-color: var(--bg-base);
+  background-image: url("/bg-patterns/main.svg");
+  background-repeat: repeat;
+  background-size: var(--pattern-size);
+  background-position: top left;
   color: var(--text);
   font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   line-height: 1.5;
+  position: relative;
+  isolation: isolate;
 }
+
+/* Optional body background gradient (disabled by default).
+body {
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(148, 163, 184, 0.08), transparent 45%),
+    linear-gradient(160deg, var(--bg-a), var(--bg-b)),
+    url("/bg-patterns/main.svg");
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-size: auto, auto, var(--pattern-size);
+  background-position: center top, center, top left;
+}
+*/
+
+/* Optional pattern recolor/tint layer (disabled by default).
+body::before {
+  content: "";
+  position: fixed;
+  inset: 5px;
+  pointer-events: none;
+  z-index: -1;
+  background: linear-gradient(135deg, var(--pattern-tint-a), var(--pattern-tint-b));
+  -webkit-mask-image: url("/bg-patterns/main.svg");
+  mask-image: url("/bg-patterns/main.svg");
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  -webkit-mask-size: var(--pattern-size);
+  mask-size: var(--pattern-size);
+  -webkit-mask-position: top left;
+  mask-position: top left;
+}
+*/
 
 a {
   color: var(--link);
@@ -109,6 +155,10 @@ code {
 }
 
 /* Skill card icon gradients (uses external SVGs as masks). */
+.skill-card {
+  position: relative;
+}
+
 .skill-card .skill-icon {
   display: inline-block;
   background: rgba(226, 232, 240, 0.85);
@@ -120,10 +170,6 @@ code {
   mask-position: center;
   -webkit-mask-size: contain;
   mask-size: contain;
-  transition:
-    background 220ms ease,
-    transform 220ms ease,
-    filter 220ms ease;
 }
 
 .skill-card:hover .skill-icon,
@@ -131,6 +177,38 @@ code {
   background: var(--skill-gradient, rgba(226, 232, 240, 0.85));
   filter: saturate(1.08) brightness(1.05);
   transform: translateY(-1px);
+  transition:
+    background 220ms ease,
+    transform 220ms ease,
+    filter 220ms ease;
+}
+
+.skill-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.skill-card:hover::after,
+.skill-card:focus-visible::after {
+  background: var(--skill-gradient, transparent);
+  opacity: 1;
+  transition: opacity 220ms ease;
+}
+
+.skill-card:hover,
+.skill-card:focus-visible {
+  border-color: transparent;
 }
 
 .skill-card[data-skill="3d-printing"] {
