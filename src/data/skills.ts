@@ -43,10 +43,10 @@ export const skills: Skill[] = [
         blurb: "Designing systems, mechanics, and player experiences."
     },
     {
-        title: "Video Editing",
-        slug: "video-editing",
-        icon: "/icons/video-edit.svg",
-        blurb: "Editing and producing video content for streaming and social media."
+        title: "Coding",
+        slug: "coding",
+        icon: "/icons/coding.svg",
+        blurb: "Writing and maintaining code for software projects."
     },
     {
         title: "Inspirations",

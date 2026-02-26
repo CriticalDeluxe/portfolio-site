@@ -1,28 +1,31 @@
 ---
+import { getEntry } from "astro:content";
 import { skills } from "../../data/skills";
-import { skillPages } from "../../data/skillPages";
 
 export async function getStaticPaths() {
   return skills.map((s) => ({ params: { slug: s.slug } }));
 }
 
 const { slug } = Astro.params;
-const skill = skills.find((s) => s.slug === slug);
 
-// getStaticPaths means skill should always exist for valid routes,
-// but this keeps the page resilient during dev.
-if (!skill) {
-  return new Response("Not found", { status: 404 });
-}
+// Find nav data (title/icon) from your central list
+const navSkill = skills.find((s) => s.slug === slug);
+if (!navSkill) return new Response("Not found", { status: 404 });
 
-const page = skillPages[skill.slug];
-const title = page?.title ?? skill.title;
-const lede = page?.lede ?? "Page in progress.";
-const steps = page?.steps ?? [{ title: "Coming soon", text: "Content will be added here." }];
-const gallery = page?.gallery ?? [];
+// Load the markdown entry for this slug (if it exists)
+const entry = await getEntry("skills", slug);
+
+// Compute page values with fallback
+const title = entry?.data.title ?? navSkill.title;
+const lede = entry?.data.lede ?? "Page in progress.";
+const gallery = entry?.data.gallery ?? [];
+
+// IMPORTANT: render() is async
+const Content = entry ? (await entry.render()).Content : null;
 ---
 
 <main>
+{
   <nav class="crumbs">
     <a href="/">Home</a>
     <span aria-hidden="true">/</span>
@@ -33,29 +36,24 @@ const gallery = page?.gallery ?? [];
 
   <header>
     <div class="title-row">
-      <img class="icon" src={skill.icon} alt="" width="36" height="36" loading="lazy" />
+      <img class="icon" src={navSkill.icon} alt="" width="36" height="36" loading="lazy" />
       <h1>{title}</h1>
     </div>
     <p class="lede">{lede}</p>
   </header>
-
-  <section>
-    <h2>Process (step by step)</h2>
-    <ol class="steps">
-      {steps.map((st) => (
-        <li>
-          <h3>{st.title}</h3>
-          <p>{st.text}</p>
-        </li>
-      ))}
-    </ol>
-  </section>
+    <section class="content">
+    {Content ? (
+        <Content />
+    ) : (
+        <p class="muted">Content coming soon.</p>
+    )}
+    </section>
 
   <section>
     <h2>Gallery</h2>
 
     {gallery.length === 0 ? (
-      <p class="muted">No images yet. Add files under <code>public/gallery/{skill.slug}/</code> and list them in <code>skillPages.ts</code>.</p>
+      <p class="muted">No images yet. Add files under <code>public/gallery/{navSkill.slug}/</code> and list them in <code>skillPages.ts</code>.</p>
     ) : (
       <div class="gallery">
         {gallery.map((g) => (
@@ -70,6 +68,8 @@ const gallery = page?.gallery ?? [];
 </main>
 
 <style>
+.content :global(h2) { margin-top: 2rem; }
+.content :global(p), .content :global(li) { max-width: 75ch; }
   main {
     max-width: 900px;
     margin: 2rem auto;
