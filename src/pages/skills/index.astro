@@ -1,13 +1,91 @@
 ﻿---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-
-const skills = ["Skill placeholder A", "Skill placeholder B", "Skill placeholder C"];
+import { skills } from "../../data/skills";
 ---
 
-<BaseLayout title="Skills">
-  <h1>Skills</h1>
-  <p>This page is ready for a future skills catalog.</p>
-  <ul>
-    {skills.map((skill) => <li>{skill}</li>)}
-  </ul>
-</BaseLayout>
+<main>
+  <header class="page-header">
+    <h1>Skills</h1>
+    <p class="intro">
+      Each area below breaks down how I work, the tools I use,
+      and examples of finished projects.
+    </p>
+  </header>
+
+  <section class="skills-grid">
+    {skills.map((s) => (
+      <a class="skill-card" href={`/skills/${s.slug}`}>
+        <img
+          class="skill-icon"
+          src={s.icon}
+          alt=""
+          width="32"
+          height="32"
+          loading="lazy"
+        />
+        <div class="skill-text">
+          <span class="skill-title">{s.title}</span>
+          {s.blurb && <span class="skill-blurb">{s.blurb}</span>}
+        </div>
+      </a>
+    ))}
+  </section>
+</main>
+
+<style>
+  main {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .intro {
+    max-width: 70ch;
+    font-size: 1.05rem;
+    opacity: 0.9;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .skill-card {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    align-items: flex-start;
+  }
+
+  .skill-card:hover {
+    background: #f5f5f5;
+  }
+
+  .skill-icon {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+  }
+
+  .skill-text {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .skill-title {
+    font-weight: 600;
+  }
+
+  .skill-blurb {
+    font-size: 0.9rem;
+    opacity: 0.85;
+  }
+</style>

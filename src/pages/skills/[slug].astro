@@ -1,0 +1,142 @@
+---
+import { skills } from "../../data/skills";
+import { skillPages } from "../../data/skillPages";
+
+export async function getStaticPaths() {
+  return skills.map((s) => ({ params: { slug: s.slug } }));
+}
+
+const { slug } = Astro.params;
+const skill = skills.find((s) => s.slug === slug);
+
+// getStaticPaths means skill should always exist for valid routes,
+// but this keeps the page resilient during dev.
+if (!skill) {
+  return new Response("Not found", { status: 404 });
+}
+
+const page = skillPages[skill.slug];
+const title = page?.title ?? skill.title;
+const lede = page?.lede ?? "Page in progress.";
+const steps = page?.steps ?? [{ title: "Coming soon", text: "Content will be added here." }];
+const gallery = page?.gallery ?? [];
+---
+
+<main>
+  <nav class="crumbs">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <a href="/skills">Skills</a>
+    <span aria-hidden="true">/</span>
+    <span>{title}</span>
+  </nav>
+
+  <header>
+    <div class="title-row">
+      <img class="icon" src={skill.icon} alt="" width="36" height="36" loading="lazy" />
+      <h1>{title}</h1>
+    </div>
+    <p class="lede">{lede}</p>
+  </header>
+
+  <section>
+    <h2>Process (step by step)</h2>
+    <ol class="steps">
+      {steps.map((st) => (
+        <li>
+          <h3>{st.title}</h3>
+          <p>{st.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section>
+    <h2>Gallery</h2>
+
+    {gallery.length === 0 ? (
+      <p class="muted">No images yet. Add files under <code>public/gallery/{skill.slug}/</code> and list them in <code>skillPages.ts</code>.</p>
+    ) : (
+      <div class="gallery">
+        {gallery.map((g) => (
+          <figure class="tile">
+            <img src={g.src} alt={g.alt} loading="lazy" />
+            {g.caption && <figcaption>{g.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    )}
+  </section>
+</main>
+
+<style>
+  main {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .crumbs {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .title-row {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+
+  .icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .lede {
+    font-size: 1.1rem;
+    max-width: 70ch;
+    margin-top: .75rem;
+    opacity: .9;
+  }
+
+  .steps {
+    padding-left: 1.25rem;
+  }
+
+  .steps li {
+    margin: 1rem 0;
+  }
+
+  .steps h3 {
+    margin: 0 0 .25rem 0;
+  }
+
+  .muted {
+    opacity: .85;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .tile {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: .75rem;
+    margin: 0;
+  }
+
+  .tile img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    display: block;
+    margin-bottom: .5rem;
+  }
+</style>

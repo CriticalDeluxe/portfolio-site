@@ -7,12 +7,7 @@
 
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-const skills = [
-  { title: "3D Printed Design", href: "/skills/3d-printing", icon: "/icons/3d-print.png" },
-  { title: "Game Art", href: "/skills/game-art", icon: "/icons/game-art.png" },
-  { title: "Programming", href: "/skills/programming", icon: "/icons/programming.png" },
-  { title: "Fiber Arts", href: "/skills/fiber-arts", icon: "/icons/fiber-arts.png" }
-];
+import { skills } from "../data/skills";
 ---
 
 
@@ -48,16 +43,21 @@ const skills = [
 
   <div class="skills-grid">
     {skills.map((s) => (
-      <a class="skill-card" href={s.href}>
-        <img class="skill-icon" src={s.icon} alt="" width="32" height="32" loading="lazy" />
-        <span>{s.title}</span>
-      </a>
+      <a class="skill-card" href={`/skills/${s.slug}`}>
+  <img class="skill-icon" src={s.icon} alt="" width="32" height="32" loading="lazy" />
+  <div class="skill-text">
+    <span class="skill-title">{s.title}</span>
+    {s.blurb && <span class="skill-blurb">{s.blurb}</span>}
+    
+  </div>
+</a>
     ))}
   </div>
 </section>
 </main>
 </BaseLayout>
 <style>
+
   main {
     max-width: 720px;
     margin: 2rem auto;
@@ -85,13 +85,13 @@ const skills = [
 }
 
 .skill-card:hover {
-  background: #f5f5f5;
+  background: #000000;
 }
 
 .skill-icon {
   flex: 0 0 auto;
-  width: 32px;
-  height: 32px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
 }
 
@@ -104,6 +104,9 @@ const skills = [
   gap: 1.5rem;
   align-items: start;
 }
+.skill-text { display: grid; gap: .15rem; }
+.skill-title { font-weight: 600; }
+.skill-blurb { font-size: .9rem; opacity: .85; }
 
 .hero-photo {
   margin: 0;
