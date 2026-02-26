@@ -1,0 +1,212 @@
+:root {
+  --bg-a: #12354e;
+  --bg-b: #5a82b3;
+  --surface: rgba(15, 23, 42, 0.55);
+  --surface-2: rgba(17, 24, 39, 0.78);
+  --border: rgba(148, 163, 184, 0.22);
+  --text: #e5e7eb;
+  --muted: #cbd5e1;
+  --link: #bfdbfe;
+  max-width: 840px;
+  /* try 780–880px */
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(148, 163, 184, 0.08), transparent 45%),
+    linear-gradient(160deg, var(--bg-a), var(--bg-b));
+  color: var(--text);
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--link);
+}
+
+img {
+  max-width: 100%;
+}
+
+.site-shell {
+  width: min(70rem, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.site-header,
+.site-footer {
+  background: rgba(2, 6, 23, 0.55);
+  border: 0 solid var(--border);
+}
+
+.site-header {
+  border-bottom-width: 1px;
+}
+
+.site-footer {
+  border-top-width: 1px;
+}
+
+.site-header .site-shell,
+.site-footer .site-shell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.brand-link {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.site-nav a {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.9;
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.page-shell {
+  width: min(60rem, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin-top: 0;
+}
+
+p {
+  color: var(--muted);
+}
+
+code {
+  font-family: Consolas, "Courier New", monospace;
+}
+
+/* Skill card icon gradients (uses external SVGs as masks). */
+.skill-card .skill-icon {
+  display: inline-block;
+  background: rgba(226, 232, 240, 0.85);
+  -webkit-mask-image: var(--icon-mask);
+  mask-image: var(--icon-mask);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.skill-card:hover .skill-icon,
+.skill-card:focus-visible .skill-icon {
+  background: var(--skill-gradient, rgba(226, 232, 240, 0.85));
+  filter: saturate(1.08) brightness(1.05);
+  transform: translateY(-1px);
+  transition:
+    background 220ms ease,
+    transform 220ms ease,
+    filter 220ms ease;
+}
+
+.skill-card {
+  position: relative;
+}
+
+.skill-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.skill-card:hover::after,
+.skill-card:focus-visible::after {
+  background: var(--skill-gradient, transparent);
+  opacity: 1;
+  /* transition: opacity 220ms ease; */
+
+  transform: translateY(-1px);
+  transition:
+    background 220ms ease,
+    transform 220ms ease,
+    filter 220ms ease;
+}
+
+.skill-card:hover,
+.skill-card:focus-visible {
+  border-color: transparent;
+}
+
+.skill-card[data-skill="3d-printing"] {
+  --skill-gradient: linear-gradient(135deg, #67e8f9, #3b82f6 52%, #a78bfa);
+}
+
+.skill-card[data-skill="game-art"] {
+  --skill-gradient: linear-gradient(135deg, #f59e0b, #ef4444 55%, #ec4899);
+}
+
+.skill-card[data-skill="music"] {
+  --skill-gradient: linear-gradient(135deg, #22d3ee, #14b8a6 48%, #10b981);
+}
+
+.skill-card[data-skill="fiber-arts"] {
+  --skill-gradient: linear-gradient(135deg, #f9a8d4, #fb7185 50%, #fdba74);
+}
+
+.skill-card[data-skill="japanese"] {
+  --skill-gradient: linear-gradient(135deg, #fda4af, #f43f5e 50%, #fb7185);
+}
+
+.skill-card[data-skill="game-design"] {
+  --skill-gradient: linear-gradient(135deg, #fde047, #f59e0b 50%, #ef4444);
+}
+
+.skill-card[data-skill="coding"] {
+  --skill-gradient: linear-gradient(135deg, #60a5fa, #38bdf8 48%, #34d399);
+}
+
+.skill-card[data-skill="inspirations"] {
+  --skill-gradient: linear-gradient(135deg, #c4b5fd, #818cf8 50%, #22d3ee);
+}
+
+.skill-card[data-skill="aspirations"] {
+  --skill-gradient: linear-gradient(135deg, #93c5fd, #a78bfa 55%, #f9a8d4);
+}
