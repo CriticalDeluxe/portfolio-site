@@ -1,0 +1,13 @@
+﻿---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const skills = ["Skill placeholder A", "Skill placeholder B", "Skill placeholder C"];
+---
+
+<BaseLayout title="Skills">
+  <h1>Skills</h1>
+  <p>This page is ready for a future skills catalog.</p>
+  <ul>
+    {skills.map((skill) => <li>{skill}</li>)}
+  </ul>
+</BaseLayout>
