@@ -1,0 +1,128 @@
+<main>
+  <nav class="crumbs">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <a href="/skills">Skills</a>
+    <span aria-hidden="true">/</span>
+    <span>3D Printed Design</span>
+  </nav>
+
+  <header>
+    <h1>3D Printed Design</h1>
+    <p class="lede">
+      My process for designing, printing, finishing, and packaging small minis —
+      with the goal of reliable results and a clean final look.
+    </p>
+  </header>
+
+  <section>
+    <h2>Process (step by step)</h2>
+    <ol class="steps">
+      <li>
+        <h3>Concept & constraints</h3>
+        <p>Pick a theme, define size limits, and decide what details must read at miniature scale.</p>
+      </li>
+      <li>
+        <h3>Modeling</h3>
+        <p>Block out forms, refine silhouette, and prepare clean geometry for printing.</p>
+      </li>
+      <li>
+        <h3>Test prints</h3>
+        <p>Print fast drafts to catch weak spots, overhang issues, and details that vanish.</p>
+      </li>
+      <li>
+        <h3>Iterate</h3>
+        <p>Adjust thickness, tolerances, and surfaces until the print is consistent.</p>
+      </li>
+      <li>
+        <h3>Finish</h3>
+        <p>Remove supports, sand where needed, and prep the surface for paint or sealing.</p>
+      </li>
+      <li>
+        <h3>Paint & seal</h3>
+        <p>Hand-paint details, then seal for durability and consistent sheen.</p>
+      </li>
+      <li>
+        <h3>Packaging</h3>
+        <p>Choose the presentation format (blister, box, card) and prep for shipping.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Gallery (placeholder)</h2>
+    <p>
+      This will become a grid of your designs. For now, it’s a placeholder so the page structure exists.
+    </p>
+
+    <div class="gallery">
+      <figure class="tile">
+        <div class="img-placeholder" aria-hidden="true"></div>
+        <figcaption>Design name — short caption</figcaption>
+      </figure>
+      <figure class="tile">
+        <div class="img-placeholder" aria-hidden="true"></div>
+        <figcaption>Design name — short caption</figcaption>
+      </figure>
+      <figure class="tile">
+        <div class="img-placeholder" aria-hidden="true"></div>
+        <figcaption>Design name — short caption</figcaption>
+      </figure>
+    </div>
+  </section>
+</main>
+
+<style>
+  main {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .crumbs {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .lede {
+    font-size: 1.1rem;
+    max-width: 70ch;
+  }
+
+  .steps {
+    padding-left: 1.25rem;
+  }
+
+  .steps li {
+    margin: 1rem 0;
+  }
+
+  .steps h3 {
+    margin: 0 0 .25rem 0;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .tile {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: .75rem;
+    margin: 0;
+  }
+
+  .img-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 6px;
+    background: #eee;
+    margin-bottom: .5rem;
+  }
+</style>
