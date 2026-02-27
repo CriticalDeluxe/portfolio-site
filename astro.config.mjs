@@ -3,5 +3,6 @@
 
 
 export default defineConfig({
-    site: "https://criticaldeluxe.github.io",
+    site: "https://CriticalDeluxe.github.io",
+    base: "/portfolio-site/",
 });

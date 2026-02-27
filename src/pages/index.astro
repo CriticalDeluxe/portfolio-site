@@ -20,7 +20,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       </div>
       <figure class="hero-photo">
         <img
-          src="/images/me.jpg"
+          src={`${import.meta.env.BASE_URL}images/me.jpg`}
           alt="Portrait of Hudson"
           width="420"
           height="420"
@@ -36,13 +36,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           skills.map((s) => (
             <a
               class="skill-card"
-              href={`/skills/${s.slug}`}
+              href={`${import.meta.env.BASE_URL}skills/${s.slug}/`}
               data-skill={s.slug}
             >
               <span
                 class="skill-icon"
                 aria-hidden="true"
-                style={`--icon-mask: url('${s.icon}')`}
+                style={`--icon-mask: url('${import.meta.env.BASE_URL}${s.icon.replace(/^\//, "")}')`}
               />
               <div class="skill-text">
                 <span class="skill-title">{s.title}</span>
@@ -109,6 +109,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
   .skill-title {
     font-weight: 600;
+  }
+
+  .skill-card:hover .skill-title,
+  .skill-card:focus-visible .skill-title {
+    /* text-decoration: underline; */
   }
 
   .skill-blurb {
